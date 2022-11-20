@@ -29,6 +29,9 @@ RUN apt-get install libapache2-mod-php8.0 -y
 # Instalamos Extensiones de PHP necesárias para Laravel
 RUN apt-get install php-xml php-mbstring php-curl php-bcmath php-json php-tokenizer -y
 
+# Instalamos la extensión de PHP-Mysql
+RUN apt-get install php-mysql -y
+
 # Instalamos Zip y Unzip
 RUN apt-get install zip unzip -y
 
