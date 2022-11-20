@@ -12,7 +12,7 @@ RUN apt-get install apache2 -y
 RUN systemctl start apache2
 
 # Instalamos WGET
-RUN apt-get install wget nano -y
+RUN apt-get install wget nano vim -y
 
 # Instalamos Git
 RUN apt-get install git -y
@@ -39,11 +39,15 @@ RUN php composer-setup.php
 RUN php -r "unlink('composer-setup.php');"
 RUN mv composer.phar /usr/local/bin/composer
 
+# Creamos el volumen para compartir la carpeta
+ADD container /var/www/html
+VOLUME ["/var/www/html"]
+
 # Instalamos Laravel
 WORKDIR /var/www/html
-RUN composer create-project laravel/laravel:9.3.11 app
-RUN chmod -R 777 app/storage
-RUN chmod -R 777 app/bootstrap/cache
+RUN composer create-project laravel/laravel:9.3.11 laravel
+RUN chmod -R 777 laravel/storage
+RUN chmod -R 777 laravel/bootstrap/cache
 
 # Configuramos el Virtual Host
 WORKDIR /etc/apache2/sites-available
