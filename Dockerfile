@@ -59,5 +59,16 @@ RUN mv 000-default.conf old-default.conf
 RUN mv virtual_host.conf 000-default.conf
 RUN systemctl restart apache2
 
+# Adiciona os programas para Setar os Locales
+RUN apt-get install -y locales
+RUN locale-gen en_US.UTF-8
+RUN update-locale LANG=en_US.UTF-8
+RUN update-locale LANGUAGE=en_US.UTF-8
+RUN update-locale LC_ALL=en_US.UTF-8
+RUN a2enmod rewrite
+RUN systemctl restart apache2
+
+WORKDIR /var/www/html/laravel
+
 EXPOSE 80
 CMD apachectl -D FOREGROUND
